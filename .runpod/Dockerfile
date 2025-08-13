@@ -78,9 +78,25 @@ RUN mkdir -p /app/pretrained_models/audio_separator && \
 RUN mkdir -p /app/pretrained_models/face_analysis/models && \
     wget -O /app/pretrained_models/face_analysis/models/face_landmarker.task \
         https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task
+#Copy all source code
+COPY . .
+
+# Configure model paths
+ENV WAV2VEC_MODEL_PATH=/app/pretrained_models/wav2vec
+ENV AUDIO_SEPARATOR_MODEL_PATH=/app/pretrained_models/audio_separator/Kim_Vocal_2.onnx
+ENV FACE_ANALYSIS_MODEL_PATH=/app/pretrained_models/face_analysis/models
+
+# Install RunPod-specific dependencies
+RUN conda run -n hallo pip install runpod requests
+
+#PORT
+EXPOSE 7860
 
 # Reset shell
 SHELL ["/bin/sh", "-c"]
 
-# Run the application
+#Set entrypoint for RunPod Serverless
 CMD ["conda", "run", "-n", "hallo", "python", "handler.py"]
+
+
+
