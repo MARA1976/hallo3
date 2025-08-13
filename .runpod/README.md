@@ -19,5 +19,5 @@ RunPod automatically builds the image using the provided Dockerfile.
 4. Licence
 This deployment setup is based on the original Hallo project. See the main repository for licensing details.
 
-
+[![Runpod](https://api.runpod.io/badge/MARA1976/hallo3)](https://console.runpod.io/hub/MARA1976/hallo3)
 
