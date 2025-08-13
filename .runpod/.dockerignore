@@ -1,0 +1,21 @@
+# Répertoires à ignorer
+.git/
+.cache/
+examples/
+assets/
+__pycache__/
+*.ipynb_checkpoints/
+
+# Fichiers lourds ou inutiles
+*.mp4
+*.jpg
+*.jpeg
+*.png
+*.wav
+*.log
+*.tmp
+*.zip
+
+# Fichiers système
+.DS_Store
+Thumbs.db

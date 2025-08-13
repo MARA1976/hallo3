@@ -1,0 +1,56 @@
+{
+  "title": "Hallo3 - Talking Portrait Generator",
+  "description": "Generates animated videos from a face image and English speech audio using the Hallo model.",
+  "type": "serverless",
+  "category": "video",
+  "iconUrl": "https://raw.githubusercontent.com/MARA1976/hallo/main/assets/hallo-icon.png",
+  "config": {
+    "runsOn": "GPU",
+    "containerDiskInGb": 20,
+    "gpuCount": 1,
+    "gpuIds": "RTX A4000,NVIDIA RTX 4090",
+    "allowedCudaVersions": [
+      "12.8", "12.7", "12.6", "12.5", "12.4",
+      "12.3", "12.2", "12.1", "12.0"
+    ],
+    "env": [
+      {
+        "key": "MODEL_NAME",
+        "value": "Hallo"
+      },
+      {
+        "key": "POSE_WEIGHT",
+        "input": {
+          "name": "Pose Weight",
+          "type": "number",
+          "description": "Controls body movement intensity",
+          "default": 0.5,
+          "min": 0.0,
+          "max": 1.0
+        }
+      },
+      {
+        "key": "FACE_WEIGHT",
+        "input": {
+          "name": "Face Weight",
+          "type": "number",
+          "description": "Controls facial fidelity",
+          "default": 0.5,
+          "min": 0.0,
+          "max": 1.0
+        }
+      },
+      {
+        "key": "LIP_WEIGHT",
+        "input": {
+          "name": "Lip Weight",
+          "type": "number",
+          "description": "Controls lip-sync accuracy",
+          "default": 0.5,
+          "min": 0.0,
+          "max": 1.0
+        }
+      }
+    ]
+  }
+}
