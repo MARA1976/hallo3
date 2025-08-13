@@ -37,8 +37,40 @@ ENV PATH=$MINICONDA_PREFIX/bin:$PATH
 # Initialize Conda so 'conda activate' works properly
 RUN conda init bash
 
-# Switch to bash login shell to apply Conda changes
-SHELL ["/bin/bash", "--login", "-c"]
+# Reset shell to default for later RUN commands
+SHELL ["/bin/sh", "-c"]
+
+# Install additional tools for model download
+RUN apt-get update && apt-get install -y \
+    git \
+    git-lfs \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install huggingface-hub for model download
+RUN conda run -n hallo pip install huggingface-hub
+
+# Create directory for pretrained models
+RUN mkdir -p /app/pretrained_models
+
+# Download main models from HuggingFace
+RUN conda run -n hallo python -c "\
+from huggingface_hub import snapshot_download; \
+snapshot_download(repo_id='fudan-generative-ai/hallo3', \
+                  local_dir='/app/pretrained_models', \
+                  local_dir_use_symlinks=False, \
+                  revision='main')"
+
+# Download additional models
+# 1. Kim Vocal_2 model
+RUN mkdir -p /app/pretrained_models/audio_separator && \
+    wget -O /app/pretrained_models/audio_separator/Kim_Vocal_2.onnx \
+    https://github.com/TRvlvr/model_repo/releases/download/all_public_uvr_models/Kim_Vocal_2.onnx
+
+# 2. Face landmarker model
+RUN mkdir -p /app/pretrained_models/face_analysis/models && \
+    wget -O /app/pretrained_models/face_analysis/models/face_landmarker.task \
+    https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task
 
 # Create Conda environment for the project
 ENV CONDA_ENV_NAME=hallo
@@ -55,11 +87,6 @@ RUN conda run -n ${CONDA_ENV_NAME} pip install --no-cache-dir -r requirements.tx
 RUN conda run -n ${CONDA_ENV_NAME} conda install -c conda-forge dlib -y && \
     conda clean --all -f -y
 
-# Reset shell to default for later RUN commands
-SHELL ["/bin/sh", "-c"]
-
-# Copy pretrained models required for inference (e.g. hallo3, wav2vec, cogvideox, etc.)
-COPY pretrained_models/ pretrained_models/
-
 # Run the main script with the activated Conda environment
 CMD ["conda", "run", "-n", "hallo", "python", "handler.py"]
+
