@@ -1,70 +1,74 @@
-# Modèles et poids
-pretrained_models/
-*.pt
-*.pth
-*.bin
-*.ckpt
-*.onnx
-*.h5
-*.tflite
-*.pb
+# Ignorer ce fichier en premier
+.gitignore
 
-# Médias lourds
+# Dossiers techniques
+.runpod/
+__pycache__/
+.idea/
+.vscode/
+.ipynb_checkpoints/
+
+# Modèles et données
+pretrained_models/
+output/
+*.pth
+*.ckpt
+*.bin
+*.onnx
+
+# Médias générés
+*.mp4
+*.mp3
+*.wav
+*.png
+*.jpg
+
+# Fichiers système
+.DS_Store
+*.tmp
+*.bak
+*.swp
+
+# Environnements
+venv/
+.env
+*.env
+
+# Dossiers spécifiques à ignorer
+.runpod/
+pretrained_models/
+output/
+tmp/
 *.mp4
 *.avi
-*.mov
-*.mkv
-*.webm
-*.wav
-*.mp3
-*.flac
 
-# rchives
-*.zip
-*.tar
-*.tar.gz
-*.rar
-*.7z
+# Fichiers de données temporaires
+*.pth
+*.ckpt
+*.bin
+*.onnx
+*.npy
+*.npz
 
-# Fichiers temporaires et caches
-__pycache__/
-*.pyc
-*.pyo
-*.log
-*.tmp
-*.cache
-.cache/
-output/
-runs/
-*.sqlite3
-
-# Docker
-*.env
-.env.*
-*.db
-*.sock
-
-# Jupyter
-.ipynb_checkpoints/
-*.ipynb
-
-# IDEs
-.vscode/
+# Fichiers système
+.DS_Store
 .idea/
-*.sublime-project
-*.sublime-workspace
+.vscode/
+__pycache__/
+*.py[cod]
+*$py.class
 
-# Tests
-*.coverage
-*.pytest_cache/
+# Fichiers de cache Python
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints
 
-# Node / JS (si jamais tu ajoutes du frontend)
-node_modules/
-*.tsbuildinfo
+# Environnements virtuels
+venv/
+env/
+*.env
 
-# Sécurité
-*.pem
-*.key
-*.crt
-*.p12
-*.jks
+# Fichiers journaux et résultats
+*.log
+*.csv
+*.json
